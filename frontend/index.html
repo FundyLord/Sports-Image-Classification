@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sports Classifier</title>
+</head>
+<body>
+  <h2>Upload a Sports Image</h2>
+  <input type="file" id="imageInput" accept="image/*" />
+  <button onclick="predict()">Predict</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    async function predict() {
+      const input = document.getElementById("imageInput");
+      if (!input.files.length) {
+        alert("Please select an image!");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", input.files[0]);
+
+      const response = await fetch("/predict", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      document.getElementById("result").innerText = 
+        `Prediction: ${data.prediction} (Confidence: ${data.confidence}%)`;
+    }
+  </script>
+</body>
+</html>
