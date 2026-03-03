@@ -58,10 +58,18 @@ htmlcov/
 Thumbs.db
 *.log
 
-#Model files (optional - uncomment if you want to exclude large models)
+# Model files (large, use Git LFS or cloud storage instead)
 *.h5
 *.keras
 *.pth
+models/
+
+# Dataset folder (too large for GitHub)
+sports-classification/
+
+# Database (contains local data)
+*.sqlite3
+db.sqlite3
 
 # Temporary files
 *.tmp
