@@ -10,10 +10,14 @@ if [[ ! -d "$ROOT_DIR" ]]; then
 fi
 
 cd "$ROOT_DIR"
+ROOT_DIR="$(pwd)"
+
+# Directories to exclude from documentation generation.
+EXCLUDE_DIRS=("./.git" "./sports-classification")
 
 # Build stable manifests.
-find . -type d | sed 's|^\./||' | sort > /tmp/sic_dirs.txt
-find . -type f | sed 's|^\./||' | sort > /tmp/sic_files.txt
+find . \( -path "./.git" -o -path "./.git/*" -o -path "./sports-classification" -o -path "./sports-classification/*" \) -prune -o -type d -print | sed 's|^\./||' | sort > /tmp/sic_dirs.txt
+find . \( -path "./.git" -o -path "./.git/*" -o -path "./sports-classification" -o -path "./sports-classification/*" \) -prune -o -type f -print | sed 's|^\./||' | sort > /tmp/sic_files.txt
 
 file_desc() {
   local f="$1"
@@ -99,7 +103,7 @@ while IFS= read -r dir; do
     echo
     echo "## Subfolders"
 
-    mapfile -d '' subdirs < <(find "$local_abs" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
+    mapfile -d '' subdirs < <(find "$local_abs" -mindepth 1 -maxdepth 1 -type d ! -name ".git" ! -name "sports-classification" -print0 | sort -z)
     if [[ ${#subdirs[@]} -eq 0 ]]; then
       echo "- (none)"
     else
