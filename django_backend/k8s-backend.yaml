@@ -41,8 +41,8 @@ spec:
     spec:
       containers:
       - name: django-container
-        image: sports-backend:latest
-        imagePullPolicy: Never
+        image: yashjadhav23/sports-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
 
