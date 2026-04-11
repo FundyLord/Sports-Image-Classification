@@ -61,7 +61,6 @@ Thumbs.db
 # Model files (large, use Git LFS or cloud storage instead)
 *.h5
 *.keras
-*.pth
 models/
 
 # Dataset folder (too large for GitHub)
