@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-insecure-key-for-dev-only')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -120,8 +120,12 @@ WSGI_APPLICATION = 'sports_api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sportsdb',
+        'USER': 'sportsuser',
+        'PASSWORD': 'sportspassword',
+        'HOST': 'postgres-service',
+        'PORT': '5432',
     }
 }
 
@@ -173,7 +177,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Model configuration
 import os
-MODEL_PATH = os.path.join(BASE_DIR.parent, 'best_resnet_gelu_adam.pth')
+MODEL_PATH = os.path.join(BASE_DIR, 'best_resnet_gelu_adam.pth')
 
 # Sports classes (100 classes from the dataset)
 SPORTS_CLASSES = [

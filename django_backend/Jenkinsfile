@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/FundyLord/Sports-Image-Classification.git'
+            }
+        }
+
+        stage('Basic Check') {
+            steps {
+                sh 'echo "Pipeline is working!"'
+                sh 'python3 --version || true'
+            }
+        }
+    }
+}

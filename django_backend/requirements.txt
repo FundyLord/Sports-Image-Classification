@@ -1,1 +1,16 @@
+Django
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+
+pillow
+numpy==1.26.4
+opencv-python
+
+torch==2.1.0+cpu
+torchvision==0.16.0+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 python-dotenv
+
+psycopg2-binary

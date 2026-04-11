@@ -69,8 +69,15 @@ class SportsClassifier:
         checkpoint_path = settings.MODEL_PATH
         print(f"Loading model from: {checkpoint_path}")
         
-        state_dict = torch.load(checkpoint_path, map_location=self._device, weights_only=True)
-        self._model.load_state_dict(state_dict)
+        state_dict = torch.load(checkpoint_path, map_location=self._device)
+
+        print("DEBUG: Loaded object type:", type(state_dict))  # 👈 ADD THIS LINE
+
+        # Handle different checkpoint formats
+        if isinstance(state_dict, dict) and 'state_dict' in state_dict:
+            self._model.load_state_dict(state_dict['state_dict'])
+        else:
+            self._model.load_state_dict(state_dict)
         self._model.to(self._device)
         self._model.eval()
         

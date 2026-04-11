@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sqlite-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/sqlite
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sqlite-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sports-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sports-backend
+  template:
+    metadata:
+      labels:
+        app: sports-backend
+    spec:
+      containers:
+      - name: django-container
+        image: sports-backend:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+
+        volumeMounts:
+        - name: sqlite-storage
+          mountPath: /app/data
+
+      volumes:
+      - name: sqlite-storage
+        persistentVolumeClaim:
+          claimName: sqlite-pvc
