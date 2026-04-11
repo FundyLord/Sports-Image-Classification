@@ -39,5 +39,11 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f django_backend/k8s-backend.yaml'
+            }
+        }
     }
 }
