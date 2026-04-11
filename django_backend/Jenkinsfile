@@ -9,10 +9,9 @@ pipeline {
             }
         }
 
-        stage('Basic Check') {
+        stage('Build Docker Image') {
             steps {
-                sh 'echo "Pipeline is working!"'
-                sh 'python3 --version || true'
+                sh 'docker build -t sports-backend .'
             }
         }
     }
