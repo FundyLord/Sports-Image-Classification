@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t sports-backend .'
+                sh 'cd django_backend && docker build -t sports-backend .'
             }
         }
     }
