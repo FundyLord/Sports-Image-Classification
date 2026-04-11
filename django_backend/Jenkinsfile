@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = "yashjadhav23/sports-backend:latest"
+    }
+
     stages {
         stage('Clone Repository') {
             steps {
@@ -12,6 +16,27 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh 'cd django_backend && docker build -t sports-backend .'
+            }
+        }
+
+        stage('Tag Docker Image') {
+            steps {
+                sh 'docker tag sports-backend $DOCKER_IMAGE'
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                    echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                    docker push $DOCKER_IMAGE
+                    '''
+                }
             }
         }
     }
