@@ -17,3 +17,4 @@ psycopg2-binary
 gunicorn
 
 django-prometheus
+python-dotenv
