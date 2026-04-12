@@ -1,17 +1,14 @@
-Django==5.2.13
-djangorestframework==3.16.1
-django-cors-headers==4.9.0
-django-prometheus==2.4.1
-djangorestframework-simplejwt==5.5.1
+Django
+djangorestframework
+djangorestframework-simplejwt
 
-psycopg2-binary==2.9.11
+torch
+torchvision
 
 numpy==1.26.4
-pillow==10.4.0
-opencv-python==4.11.0.86
+opencv-python-headless
+Pillow
 
-torch==2.2.2+cpu
-torchvision==0.17.2+cpu
+psycopg2-binary
 
-python-dotenv==1.2.2
-requests==2.32.4
+gunicorn
