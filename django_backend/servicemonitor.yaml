@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: sports-backend-monitor
+  labels:
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: sports-backend
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s

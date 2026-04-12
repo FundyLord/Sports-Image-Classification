@@ -7,6 +7,7 @@ spec:
   selector:
     app: sports-backend
   ports:
-    - protocol: TCP
+    - name: http   # 👈 ADD THIS (CRITICAL)
+      protocol: TCP
       port: 8000
       targetPort: 8000
