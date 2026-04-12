@@ -41,16 +41,7 @@ spec:
     spec:
       containers:
       - name: django-container
-        image: yashjadhav23/sports-backend:latest
+        image: yashjadhav23/sports-backend:28
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
-
-        volumeMounts:
-        - name: sqlite-storage
-          mountPath: /app/data
-
-      volumes:
-      - name: sqlite-storage
-        persistentVolumeClaim:
-          claimName: sqlite-pvc
