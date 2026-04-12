@@ -12,12 +12,15 @@ RUN apt-get update && apt-get install -y \
     libxrender-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Disable pip cache to keep image smaller.
+ENV PIP_NO_CACHE_DIR=1
+
 # Copy requirements first
 COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
 
 # Copy project files
 COPY . .
