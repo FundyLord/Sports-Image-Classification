@@ -1,4 +1,4 @@
-📄 README — Live Project Demonstration Guide (DevOps + MLOps)
+# 📄 README — Live Project Demonstration Guide (DevOps + MLOps)
 🎯 Goal
 
 This guide helps you demonstrate your already running project step-by-step:
