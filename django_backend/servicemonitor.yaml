@@ -2,12 +2,16 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: sports-backend-monitor
+  namespace: monitoring   # 👈 VERY IMPORTANT
   labels:
-    release: prometheus
+    release: prometheus   # 👈 MUST MATCH HELM
 spec:
   selector:
     matchLabels:
       app: sports-backend
+  namespaceSelector:
+    matchNames:
+      - default   # 👈 your app namespace
   endpoints:
   - port: http
     path: /metrics
