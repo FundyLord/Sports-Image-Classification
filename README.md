@@ -1,5 +1,5 @@
 # 📄 README — Live Project Demonstration Guide (DevOps + MLOps)
-🎯 Goal
+### 🎯 Goal
 
 This guide helps you demonstrate your already running project step-by-step:
 
@@ -20,7 +20,8 @@ Frontend (end-to-end ML flow)
 5. Prometheus → show monitoring
 6. Grafana → show visualization
 7. Frontend → show final product
-☸️ STEP 1 — Show Kubernetes Running System
+
+### ☸️ STEP 1 — Show Kubernetes Running System
 ▶️ Command
 ```bash
 kubectl get pods
@@ -45,7 +46,7 @@ kubectl get pods --all-namespaces
 
 “Across all namespaces, I have application, monitoring, ingress, and system pods running.”
 
-🌐 STEP 2 — Show Ingress (External Access)
+### 🌐 STEP 2 — Show Ingress (External Access)
 ▶️ Command
 ```bash
 kubectl describe ingress sports-ingress
@@ -58,7 +59,7 @@ kubectl describe ingress sports-ingress
 ```text
 User → sports.local → Ingress → Service → Pod
 ```
-🌍 STEP 3 — Show Backend Working (API Proof)
+### 🌍 STEP 3 — Show Backend Working (API Proof)
 ▶️ Command
 ```bash
 curl http://sports.local/api/sightings/
@@ -67,7 +68,7 @@ curl http://sports.local/api/sightings/
 
 “This API returns predictions made by my ML model, stored in the database.”
 
-🤖 STEP 4 — Jenkins CI/CD (LIVE DEMO)
+### 🤖 STEP 4 — Jenkins CI/CD (LIVE DEMO)
 ▶️ Step 4.1 — Open Jenkins
 
 Open in browser:
@@ -119,7 +120,7 @@ Open Console Output
 
 “Jenkins builds the Docker image, pushes it, and deploys it to Kubernetes automatically.”
 
-📊 STEP 5 — Prometheus Monitoring
+### 📊 STEP 5 — Prometheus Monitoring
 ▶️ Start Prometheus access
 ```bash
 kubectl port-forward svc/prometheus-kube-prometheus-prometheus -n monitoring 9090
@@ -148,7 +149,7 @@ while true; do curl http://sports.local/api/sightings/; done
 
 “Metrics increase in real time as traffic increases.”
 
-📈 STEP 6 — Grafana Visualization
+### 📈 STEP 6 — Grafana Visualization
 ▶️ Start Grafana
 ```bash
 kubectl port-forward svc/prometheus-grafana -n monitoring 3000:80
@@ -180,7 +181,7 @@ while true; do curl http://sports.local/api/sightings/; done
 
 “This shows real-time request rate of my application.”
 
-🌐 STEP 7 — Frontend Demo (FINAL)
+### 🌐 STEP 7 — Frontend Demo (FINAL)
 ▶️ Start frontend
 ```bash
 cd react_frontend
