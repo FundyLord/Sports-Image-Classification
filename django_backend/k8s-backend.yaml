@@ -30,7 +30,7 @@ kind: Deployment
 metadata:
   name: sports-backend
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: sports-backend
@@ -41,7 +41,12 @@ spec:
     spec:
       containers:
       - name: django-container
-        image: yashjadhav23/sports-backend:30
+        image: yashjadhav23/sports-backend:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "500m"
