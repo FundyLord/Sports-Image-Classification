@@ -121,11 +121,22 @@ WSGI_APPLICATION = 'sports_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sportsdb',
-        'USER': 'sportsuser',
+import sys
+
+if 'test' in sys.argv:
+    # Use SQLite for testing (no external dependency)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'sportsdb',
+            'USER': 'sportsuser',
         'PASSWORD': 'sportspassword',
         'HOST': 'postgres-service',
         'PORT': '5432',

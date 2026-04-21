@@ -18,6 +18,17 @@ pipeline {
             }
         }
 
+        stage('Run Tests') {
+            steps {
+                sh '''
+                set -e
+                cd django_backend
+                pip install -r requirements.txt
+                python manage.py test
+                '''
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh '''
