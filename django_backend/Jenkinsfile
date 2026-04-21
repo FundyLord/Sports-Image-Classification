@@ -22,9 +22,10 @@ pipeline {
             steps {
                 sh '''
                 set -e
-                cd django_backend
-                pip install -r requirements.txt
-                python manage.py test
+
+                docker build -t test-image -f django_backend/Dockerfile django_backend
+
+                docker run --rm test-image python manage.py test
                 '''
             }
         }
