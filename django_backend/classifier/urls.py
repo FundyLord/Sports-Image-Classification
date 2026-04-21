@@ -7,7 +7,8 @@ from .views import (
     PredictAndSaveView,
     SightingsListView,
     HealthCheckView,
-    SportsListView
+    SportsListView,
+    whoami
 )
 
 urlpatterns = [
@@ -16,4 +17,5 @@ urlpatterns = [
     path('sightings/', SightingsListView.as_view(), name='sightings'),
     path('health/', HealthCheckView.as_view(), name='health'),
     path('sports/', SportsListView.as_view(), name='sports-list'),
+    path('whoami/', whoami, name='whoami'),
 ]

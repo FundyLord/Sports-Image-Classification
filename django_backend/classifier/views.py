@@ -203,3 +203,11 @@ class SportsListView(APIView):
             'count': len(settings.SPORTS_CLASSES),
             'sports': [s.title() for s in settings.SPORTS_CLASSES]
         })
+
+import socket
+from django.http import JsonResponse
+
+def whoami(request):
+    return JsonResponse({
+        "pod": socket.gethostname()
+    })
