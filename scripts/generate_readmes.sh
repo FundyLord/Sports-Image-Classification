@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+  #!/usr/bin/env bash
 set -euo pipefail
 
 ROOT_DIR="${1:-$(pwd)}"
