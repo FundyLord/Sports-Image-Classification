@@ -265,6 +265,7 @@ Push code → show:
 🎯 Say:
 
 “If tests fail, deployment is automatically stopped, ensuring only stable code reaches production.”
+
 ---
 
 # 📊 STEP 9 — Prometheus Monitoring
