@@ -250,6 +250,22 @@ git push
 “Jenkins builds the Docker image, pushes it, and deploys it to Kubernetes.”
 
 ---
+▶️ Show Failure Case (Optional - Advanced Demo)
+
+👉 (Only if you want to impress)
+
+Break test intentionally:
+```bash
+self.assertEqual(response.status_code, 500)
+```
+Push code → show:
+
+❌ Pipeline fails
+
+🎯 Say:
+
+“If tests fail, deployment is automatically stopped, ensuring only stable code reaches production.”
+---
 
 # 📊 STEP 9 — Prometheus Monitoring
 
@@ -361,5 +377,4 @@ Say this confidently:
 * Visualization using Grafana
 * End-to-end ML workflow
 
-Just checking again-2
 ---
