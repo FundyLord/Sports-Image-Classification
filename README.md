@@ -156,7 +156,7 @@ kubectl get hpa
 ▶️ Generate load
 
 ```bash
-while true; do curl http://sports.local/api/whoami; done
+while true; do curl http://sports.local/api/whoami/; done
 ```
 
 ▶️ Watch scaling
