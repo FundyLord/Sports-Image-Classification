@@ -6,42 +6,52 @@ pipeline {
     }
 
     environment {
-        IMAGE_REPO = "yashjadhav23/sports-backend"
+        BACKEND_REPO = "yashjadhav23/sports-backend"
+        FRONTEND_REPO = "yashjadhav23/sports-frontend"
         IMAGE_TAG = "${BUILD_NUMBER}"
         KUBECONFIG_FILE = "${WORKSPACE}/django_backend/kubeconfig.yaml"
     }
 
     stages {
+
+        // ---------------- CHECKOUT ----------------
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
-        stage('Run Tests') {
+        // ---------------- BACKEND TEST ----------------
+        stage('Test Backend') {
             steps {
                 sh '''
                 set -e
 
-                docker build -t $IMAGE_REPO:test -f django_backend/Dockerfile django_backend
-
-                docker run --rm $IMAGE_REPO:test python manage.py test
+                docker build -t $BACKEND_REPO:test -f django_backend/Dockerfile django_backend
+                docker run --rm $BACKEND_REPO:test python manage.py test
                 '''
             }
         }
 
-        stage('Build Docker Image') {
+        // ---------------- BUILD IMAGES ----------------
+        stage('Build Images') {
             steps {
                 sh '''
                 set -e
 
-                docker tag $IMAGE_REPO:test $IMAGE_REPO:$IMAGE_TAG
-                docker tag $IMAGE_REPO:test $IMAGE_REPO:latest
+                # Backend image
+                docker tag $BACKEND_REPO:test $BACKEND_REPO:$IMAGE_TAG
+                docker tag $BACKEND_REPO:test $BACKEND_REPO:latest
+
+                # Frontend image
+                docker build -t $FRONTEND_REPO:$IMAGE_TAG ./react_frontend
+                docker tag $FRONTEND_REPO:$IMAGE_TAG $FRONTEND_REPO:latest
                 '''
             }
         }
 
-        stage('Push Docker Image') {
+        // ---------------- PUSH IMAGES ----------------
+        stage('Push Images') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-creds',
@@ -50,14 +60,22 @@ pipeline {
                 )]) {
                     sh '''
                     set -e
+
                     echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    docker push $IMAGE_REPO:$IMAGE_TAG
-                    docker push $IMAGE_REPO:latest
+
+                    # Push backend
+                    docker push $BACKEND_REPO:$IMAGE_TAG
+                    docker push $BACKEND_REPO:latest
+
+                    # Push frontend
+                    docker push $FRONTEND_REPO:$IMAGE_TAG
+                    docker push $FRONTEND_REPO:latest
                     '''
                 }
             }
         }
 
+        // ---------------- DEPLOY ----------------
         stage('Deploy to Kubernetes') {
             steps {
                 sh '''
@@ -73,11 +91,15 @@ pipeline {
                 kubectl config current-context
                 kubectl get nodes
 
+                # Apply manifests
                 kubectl apply -f django_backend/k8s-backend.yaml
                 kubectl apply -f django_backend/k8s-service.yaml
+                kubectl apply -f django_backend/k8s-frontend.yaml
                 kubectl apply -f django_backend/k8s-ingress.yaml
 
+                # Wait for rollout
                 kubectl rollout status deployment/sports-backend --timeout=180s
+                kubectl rollout status deployment/sports-frontend --timeout=180s
                 '''
             }
         }
