@@ -3,11 +3,27 @@ kind: Ingress
 metadata:
   name: sports-ingress
 spec:
+  tls:
+  - hosts:
+    - sports.local
+    secretName: sports-tls
+    
   rules:
   - host: sports.local
     http:
       paths:
+
+      # 🔹 Frontend (React)
       - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sports-frontend-service
+            port:
+              number: 80
+
+      # 🔹 Backend API (Django)
+      - path: /api
         pathType: Prefix
         backend:
           service:

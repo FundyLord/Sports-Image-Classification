@@ -66,16 +66,13 @@ MIDDLEWARE = [
 
 # CORS settings - Allow React frontend (Vite may use different ports)
 CORS_ALLOWED_ORIGINS = [
+    "https://sports.local",   # ✅ ADD THIS
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
 ]
 
 # Allow all localhost origins in development
-CORS_ALLOW_ALL_ORIGINS = DEBUG
+CORS_ALLOW_ALL_ORIGINS = TRUE
 
 # REST Framework settings with JWT authentication
 REST_FRAMEWORK = {
