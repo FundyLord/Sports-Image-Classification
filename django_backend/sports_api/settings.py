@@ -72,7 +72,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Allow all localhost origins in development
-CORS_ALLOW_ALL_ORIGINS = TRUE
+CORS_ALLOW_ALL_ORIGINS = True
 
 # REST Framework settings with JWT authentication
 REST_FRAMEWORK = {
