@@ -130,13 +130,13 @@ if 'test' in sys.argv:
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'sportsdb',
-            'USER': 'sportsuser',
-        'PASSWORD': 'sportspassword',
-        'HOST': 'postgres-service',
-        'PORT': '5432',
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME', 'sportsdb'),
+        'USER': os.getenv('DB_USER', 'sportsuser'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'sportspassword'),
+        'HOST': os.getenv('DB_HOST', 'postgres-service'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 

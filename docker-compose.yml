@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:15
+
+    environment:
+      POSTGRES_DB: sportsdb
+      POSTGRES_USER: sportsuser
+      POSTGRES_PASSWORD: sportspassword
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./django_backend
+
+    ports:
+      - "8000:8000"
+
+    environment:
+      SECRET_KEY: dev-secret-key
+      DEBUG: "True"
+
+      DB_NAME: sportsdb
+      DB_USER: sportsuser
+      DB_PASSWORD: sportspassword
+      DB_HOST: postgres
+      DB_PORT: 5432
+
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./react_frontend
+
+    ports:
+      - "3000:80"
+
+    environment:
+      VITE_API_URL: http://backend:8000/api
+
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:

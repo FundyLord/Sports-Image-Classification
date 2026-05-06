@@ -77,7 +77,7 @@ kubectl get pods --all-namespaces
 ▶️ Command
 
 ```bash
-curl http://sports.local/api/sightings/
+curl -k https://sports.local/api/sightings/
 ```
 
 🎯 Say
@@ -101,18 +101,12 @@ kubectl describe ingress sports-ingress
 ▶️ Explain flow
 
 ```text
-User → sports.local → Ingress → Service → Pod
+User → https://sports.local → Ingress (TLS) → Service → Pod
 ```
 
 ---
 
 # ⚖️ STEP 4 — Replication (Manual Scaling)
-
-▶️ Command
-
-```bash
-kubectl scale deployment sports-backend --replicas=3
-```
 
 ▶️ Verify
 
@@ -121,7 +115,7 @@ kubectl get pods
 ```
 
 🎯 Say
-“I manually scaled my backend to multiple replicas, demonstrating horizontal scaling.”
+“I scaled my backend to multiple replicas, demonstrating horizontal scaling.”
 
 ---
 
@@ -130,7 +124,7 @@ kubectl get pods
 ▶️ Open in browser
 
 ```text
-http://sports.local/api/whoami
+https://sports.local/api/whoami
 ```
 
 ▶️ Refresh multiple times
@@ -156,7 +150,9 @@ kubectl get hpa
 ▶️ Generate load
 
 ```bash
-while true; do curl http://sports.local/api/whoami/; done
+while true; do
+  curl -k https://sports.local/api/sightings/ > /dev/null &
+done
 ```
 
 ▶️ Watch scaling
@@ -379,10 +375,4 @@ Say this confidently:
 * End-to-end ML workflow
 
 ---
-# demo change
-# demo change
-# demo change
-# demo change
-# demo change
-# demo change
-# demo change
+
