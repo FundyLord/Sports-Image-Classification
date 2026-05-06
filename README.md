@@ -1,153 +1,225 @@
-# 📄 README — Live Project Demonstration Guide (DevOps + MLOps)
+# 📄 README — Complete DevOps + MLOps Project Demonstration Guide
 
 ---
 
-## 🎯 Goal
+# 🎯 Project Overview
 
-This guide helps you demonstrate a **complete end-to-end DevOps + MLOps system**, including:
+This project demonstrates a complete end-to-end **DevOps + MLOps architecture** for a Sports Image Classification application.
 
-* Docker (containerization)
-* Kubernetes (deployment & orchestration)
-* Ingress (external access)
-* Replication & Load Balancing
-* Auto Scaling (HPA)
-* Self-Healing (fault tolerance)
-* Jenkins CI/CD (automation)
-* Prometheus (monitoring)
-* Grafana (visualization)
-* Frontend (end-to-end ML flow)
+The system supports:
+
+- Docker containerization
+- Docker Compose orchestration
+- Kubernetes deployment & orchestration
+- HTTPS/TLS secured ingress
+- Replication & Load Balancing
+- Horizontal Pod Autoscaling (HPA)
+- Self-Healing infrastructure
+- Jenkins CI/CD pipeline
+- Prometheus monitoring
+- Grafana visualization
+- Full-stack frontend + backend integration
+- PostgreSQL database integration
+- Machine Learning inference workflow
 
 ---
 
-## 🧠 DEMO FLOW (IMPORTANT)
+# 🧠 PROJECT ARCHITECTURE
+
+## Kubernetes Architecture
+
+```text
+User
+  ↓
+HTTPS Ingress (sports.local)
+  ↓
+Kubernetes Services
+  ↓
+Frontend Pods ↔ Backend Pods ↔ PostgreSQL
+```
+
+---
+
+## Docker Compose Architecture
+
+```text
+Frontend Container ↔ Backend Container ↔ PostgreSQL Container
+```
+
+---
+
+# 🚀 TECHNOLOGIES USED
+
+## Backend
+- Django
+- Django REST Framework
+- PostgreSQL
+- JWT Authentication
+- TensorFlow / ML Model
+
+## Frontend
+- React
+- Vite
+- TypeScript
+- Nginx
+
+## DevOps / Infrastructure
+- Docker
+- Docker Compose
+- Kubernetes
+- Minikube
+- NGINX Ingress Controller
+- Jenkins
+- Prometheus
+- Grafana
+- Horizontal Pod Autoscaler (HPA)
+
+---
+
+# 🧠 DEMO FLOW (IMPORTANT)
 
 👉 Follow this exact order during presentation:
 
-1. Kubernetes → prove system running
+1. Kubernetes → prove cluster running
 2. API → prove backend works
-3. Ingress → show routing
-4. Replication → manual scaling
-5. Load Balancing → multiple pods serving
+3. HTTPS Ingress → show secure routing
+4. Replication → multiple backend replicas
+5. Load Balancing → requests served by different pods
 6. Auto Scaling → HPA demo
-7. Self-Healing → failure simulation
+7. Self-Healing → failure recovery
 8. Jenkins → CI/CD automation
 9. Prometheus → monitoring
 10. Grafana → visualization
-11. Frontend → final product
+11. Frontend → end-to-end ML workflow
+12. Docker Compose → multi-container orchestration
 
 ---
 
 # ☸️ STEP 1 — Show Kubernetes Running System
 
-▶️ Command
+## ▶️ Show Pods
 
 ```bash
 kubectl get pods
 ```
 
-🎯 Say
-“These are my application pods running in Kubernetes — backend and database.”
+🎯 Say:
+
+> “These are my Kubernetes application pods including frontend, backend, and PostgreSQL.”
 
 ---
 
-▶️ Command
+## ▶️ Show Services
 
 ```bash
 kubectl get svc
 ```
 
-🎯 Say
-“Services provide stable networking and enable communication between components.”
+🎯 Say:
+
+> “Services provide stable networking and internal communication between Kubernetes components.”
 
 ---
 
-▶️ Command
+## ▶️ Show Complete Cluster
 
 ```bash
 kubectl get pods --all-namespaces
 ```
 
-🎯 Say
-“This shows all system, monitoring, and application components running in the cluster.”
+🎯 Say:
+
+> “This shows monitoring, ingress, application, and Kubernetes system components running together.”
 
 ---
 
 # 🌍 STEP 2 — Show Backend Working (API Proof)
 
-▶️ Command
+## ▶️ API Test
 
 ```bash
 curl -k https://sports.local/api/sightings/
 ```
 
-🎯 Say
-“This API returns predictions from my ML model stored in PostgreSQL.”
+🎯 Say:
+
+> “This API returns ML prediction records stored in PostgreSQL through the Django backend.”
 
 ---
 
-# 🌐 STEP 3 — Show Ingress (External Access)
+# 🌐 STEP 3 — Show HTTPS Ingress Routing
 
-▶️ Command
+## ▶️ Show Ingress
 
 ```bash
 kubectl describe ingress sports-ingress
 ```
 
-🎯 Say
-“Ingress acts as a gateway routing external traffic to internal services.”
+🎯 Say:
+
+> “Ingress acts as an HTTPS gateway routing external traffic to Kubernetes services.”
 
 ---
 
-▶️ Explain flow
+## ▶️ Explain Routing Flow
 
 ```text
 User → https://sports.local → Ingress (TLS) → Service → Pod
 ```
 
+🎯 Highlight:
+
+- HTTPS enabled using TLS
+- Secure frontend/backend communication
+- Internal Kubernetes routing
+
 ---
 
 # ⚖️ STEP 4 — Replication (Manual Scaling)
 
-▶️ Verify
+## ▶️ Verify Replicas
 
 ```bash
 kubectl get pods
 ```
 
-🎯 Say
-“I scaled my backend to multiple replicas, demonstrating horizontal scaling.”
+🎯 Say:
+
+> “The backend runs with multiple replicas demonstrating horizontal scaling and high availability.”
 
 ---
 
 # 🔁 STEP 5 — Load Balancing Proof
 
-▶️ Open in browser
+## ▶️ Open in Browser
 
 ```text
-https://sports.local/api/whoami
+https://sports.local/api/whoami/
 ```
 
-▶️ Refresh multiple times
+Refresh multiple times.
 
-🎯 Say
-“Each request is handled by a different pod, proving load balancing via Kubernetes Service.”
+🎯 Say:
+
+> “Each request is served by different backend pods proving Kubernetes Service load balancing.”
 
 ---
 
-# 📈 STEP 6 — Auto Scaling (HPA)
+# 📈 STEP 6 — Horizontal Pod Autoscaling (HPA)
 
-▶️ Command
+## ▶️ Show HPA
 
 ```bash
 kubectl get hpa
 ```
 
-🎯 Say
-“This is my Horizontal Pod Autoscaler which scales pods automatically based on CPU usage.”
+🎯 Say:
+
+> “Horizontal Pod Autoscaler automatically scales backend replicas based on CPU utilization.”
 
 ---
 
-▶️ Generate load
+## ▶️ Generate Load
 
 ```bash
 while true; do
@@ -155,46 +227,59 @@ while true; do
 done
 ```
 
-▶️ Watch scaling
+---
+
+## ▶️ Watch Scaling
 
 ```bash
 kubectl get pods -w
 ```
 
-🎯 Say
-“As traffic increases, Kubernetes automatically increases the number of pods.”
+🎯 Say:
+
+> “As traffic increases, Kubernetes automatically scales backend pods.”
 
 ---
 
-▶️ Stop load (CTRL + C)
+## ▶️ Stop Load
 
-🎯 Say
-“When traffic decreases, the system automatically scales down to optimize resources.”
+Press:
+
+```text
+CTRL + C
+```
+
+🎯 Say:
+
+> “When traffic decreases, Kubernetes scales down automatically to optimize resources.”
 
 ---
 
-# 💥 STEP 7 — Self-Healing (Failure Simulation)
+# 💥 STEP 7 — Self-Healing Demonstration
 
-▶️ Command
+## ▶️ Delete Pod
 
 ```bash
 kubectl delete pod <pod-name>
 ```
 
-▶️ Watch
+---
+
+## ▶️ Watch Recovery
 
 ```bash
 kubectl get pods -w
 ```
 
-🎯 Say
-“When a pod fails or is deleted, Kubernetes automatically recreates it, ensuring high availability.”
+🎯 Say:
+
+> “Kubernetes automatically recreates failed pods ensuring high availability and fault tolerance.”
 
 ---
 
-# 🤖 STEP 8 — Jenkins CI/CD (LIVE DEMO)
+# 🤖 STEP 8 — Jenkins CI/CD Pipeline
 
-▶️ Open Jenkins
+## ▶️ Open Jenkins
 
 ```text
 http://localhost:8080
@@ -202,7 +287,7 @@ http://localhost:8080
 
 ---
 
-▶️ Start ngrok (if needed)
+## ▶️ Start ngrok (if needed)
 
 ```bash
 ngrok http 8080
@@ -210,7 +295,7 @@ ngrok http 8080
 
 ---
 
-▶️ Get ngrok URL
+## ▶️ Get ngrok URL
 
 ```bash
 curl http://127.0.0.1:4040/api/tunnels
@@ -218,7 +303,7 @@ curl http://127.0.0.1:4040/api/tunnels
 
 ---
 
-▶️ Update GitHub webhook
+## ▶️ Update GitHub Webhook
 
 ```text
 https://<ngrok-url>/github-webhook/
@@ -226,7 +311,7 @@ https://<ngrok-url>/github-webhook/
 
 ---
 
-▶️ Trigger pipeline
+## ▶️ Trigger CI/CD Pipeline
 
 ```bash
 echo "# demo change" >> README.md
@@ -235,44 +320,58 @@ git commit -m "trigger CI/CD demo"
 git push
 ```
 
-🎯 Say
-“This triggers Jenkins pipeline automatically using GitHub webhook.”
+🎯 Say:
+
+> “GitHub webhook automatically triggers Jenkins pipeline after code push.”
 
 ---
 
-▶️ Show Jenkins stages
+## ▶️ Show Jenkins Pipeline Stages
 
-🎯 Say
-“Jenkins builds the Docker image, pushes it, and deploys it to Kubernetes.”
+🎯 Explain:
 
----
-▶️ Show Failure Case (Optional - Advanced Demo)
-
-👉 (Only if you want to impress)
-
-Break test intentionally:
-```bash
-self.assertEqual(response.status_code, 500)
-```
-Push code → show:
-
-❌ Pipeline fails
+- Source checkout
+- Backend testing
+- Docker image build
+- Docker image push
+- Kubernetes deployment
+- Rollout verification
 
 🎯 Say:
 
-“If tests fail, deployment is automatically stopped, ensuring only stable code reaches production.”
+> “Jenkins automates testing, image creation, registry push, and Kubernetes deployment.”
+
+---
+
+## ▶️ Optional Advanced Demo — Pipeline Failure
+
+Break test intentionally:
+
+```python
+self.assertEqual(response.status_code, 500)
+```
+
+Push code and show:
+
+❌ Pipeline failure
+
+🎯 Say:
+
+> “If tests fail, deployment is blocked automatically ensuring production stability.”
 
 ---
 
 # 📊 STEP 9 — Prometheus Monitoring
 
-▶️ Command
+## ▶️ Port Forward
 
 ```bash
 kubectl port-forward svc/prometheus-kube-prometheus-prometheus -n monitoring 9090
 ```
 
-▶️ Open
+---
+
+## ▶️ Open Prometheus
 
 ```text
 http://localhost:9090
@@ -280,32 +379,37 @@ http://localhost:9090
 
 ---
 
-▶️ Query
+## ▶️ Query
 
 ```text
 django_http_requests_before_middlewares_total
 ```
 
-▶️ Generate load
+---
+
+## ▶️ Generate Load
 
 ```bash
-while true; do curl http://sports.local/api/sightings/; done
+while true; do curl -k https://sports.local/api/sightings/; done
 ```
 
-🎯 Say
-“Prometheus collects real-time metrics from the backend.”
+🎯 Say:
+
+> “Prometheus collects real-time application metrics from the Django backend.”
 
 ---
 
 # 📈 STEP 10 — Grafana Visualization
 
-▶️ Command
+## ▶️ Port Forward
 
 ```bash
 kubectl port-forward svc/prometheus-grafana -n monitoring 3000:80
 ```
 
-▶️ Open
+---
+
+## ▶️ Open Grafana
 
 ```text
 http://localhost:3000
@@ -313,66 +417,195 @@ http://localhost:3000
 
 ---
 
-▶️ Query
+## ▶️ Query
 
 ```text
 rate(django_http_requests_before_middlewares_total[1m])
 ```
 
-🎯 Say
-“Grafana visualizes metrics from Prometheus in real time.”
+🎯 Say:
+
+> “Grafana visualizes Prometheus metrics in real time.”
 
 ---
 
-# 🌐 STEP 11 — Frontend Demo
+# 🌐 STEP 11 — Frontend + ML Workflow Demo
 
-▶️ Start frontend
-
-```bash
-cd react_frontend
-npm run dev
-```
-
-▶️ Open
+## ▶️ Open Application
 
 ```text
-http://localhost:5173
+https://sports.local
 ```
 
 ---
 
-🎯 Demo flow
+## ▶️ Demo Flow
 
-* Upload image
-* Model predicts sport
-* Data stored in database
-* Results displayed
+- Register/Login
+- Upload sports image
+- ML model predicts sport
+- Prediction stored in PostgreSQL
+- Result displayed on frontend map/dashboard
+- Location detection shown
 
-🎯 Say
-“This demonstrates the complete end-to-end ML pipeline from user input to prediction.”
+🎯 Say:
+
+> “This demonstrates the complete end-to-end MLOps workflow from user upload to ML inference and database persistence.”
+
+---
+
+# 🐳 STEP 12 — Docker Compose Demonstration
+
+## ▶️ Explain Goal
+
+🎯 Say:
+
+> “I also implemented Docker Compose orchestration so the complete application can run outside Kubernetes using multi-container deployment.”
+
+---
+
+## ▶️ Show Compose File
+
+```bash
+cat docker-compose.yml
+```
+
+🎯 Explain:
+
+- Frontend container
+- Backend container
+- PostgreSQL container
+- Internal container networking
+- Persistent database volume
+
+---
+
+## ▶️ Run Full Stack
+
+```bash
+docker compose up -d --build
+```
+
+---
+
+## ▶️ Verify Running Containers
+
+```bash
+docker compose ps
+```
+
+🎯 Say:
+
+> “Docker Compose automatically orchestrates frontend, backend, and database containers together.”
+
+---
+
+## ▶️ Open Compose Frontend
+
+```text
+http://localhost:3000
+```
+
+🎯 Demonstrate:
+
+- Login
+- Image upload
+- Prediction
+- Backend communication
+- Database persistence
+
+---
+
+# 🧠 Environment Configuration Strategy
+
+## Kubernetes Environment
+
+```env
+VITE_API_URL=https://sports.local/api
+```
+
+---
+
+## Docker Compose Environment
+
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+---
+
+## Environment Switching
+
+### Kubernetes
+
+```bash
+cp react_frontend/.env.kubernetes react_frontend/.env
+```
+
+---
+
+### Docker Compose
+
+```bash
+cp react_frontend/.env.compose react_frontend/.env
+```
+
+🎯 Say:
+
+> “The project supports multiple deployment environments using separate environment configurations.”
 
 ---
 
 # 🧠 FINAL CLOSING (IMPORTANT)
 
-Say this confidently:
+Say confidently:
 
-> “This project demonstrates a complete DevOps and MLOps pipeline with Docker-based containerization, Kubernetes orchestration, CI/CD automation, monitoring, auto-scaling, and self-healing capabilities.”
+> “This project demonstrates a complete DevOps and MLOps architecture including Docker containerization, Docker Compose orchestration, Kubernetes deployment, HTTPS ingress, CI/CD automation, monitoring, autoscaling, self-healing infrastructure, and end-to-end machine learning inference.”
 
 ---
 
 # 🚀 Key Features Demonstrated
 
-* Docker-based containerized application
-* Kubernetes deployment & orchestration
-* Horizontal scaling (replication)
-* Load balancing via services
-* Auto-scaling using HPA
-* Self-healing infrastructure
-* CI/CD pipeline with Jenkins
-* Monitoring using Prometheus
-* Visualization using Grafana
-* End-to-end ML workflow
+## DevOps Features
+
+- Docker containerization
+- Multi-stage Docker builds
+- Docker Compose orchestration
+- Kubernetes deployment & orchestration
+- HTTPS/TLS ingress
+- Horizontal scaling & replication
+- Load balancing
+- Horizontal Pod Autoscaling (HPA)
+- Self-healing infrastructure
+- Jenkins CI/CD pipeline
+- GitHub webhook automation
+- Prometheus monitoring
+- Grafana visualization
 
 ---
+
+## MLOps Features
+
+- Machine learning inference pipeline
+- Image classification workflow
+- Prediction persistence
+- End-to-end frontend integration
+- PostgreSQL database integration
+- Real-time API communication
+
+---
+
+# 🏆 Final Project Outcome
+
+This project successfully demonstrates:
+
+✅ DevOps automation
+✅ MLOps workflow
+✅ Full-stack deployment
+✅ Container orchestration
+✅ Monitoring & observability
+✅ High availability
+✅ Scalability
+✅ CI/CD automation
+✅ Production-style architecture
 
