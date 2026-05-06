@@ -589,7 +589,7 @@ while true; do curl -k https://sports.local/api/sightings/; done
 ## ▶️ Port Forward
 
 ```bash
-kubectl port-forward svc/prometheus-grafana -n monitoring 3000:80
+kubectl port-forward svc/prometheus-grafana -n monitoring 3001:80
 ```
 
 ---
@@ -597,7 +597,7 @@ kubectl port-forward svc/prometheus-grafana -n monitoring 3000:80
 ## ▶️ Open Grafana
 
 ```text
-http://localhost:3000
+http://localhost:3001
 ```
 
 ---
