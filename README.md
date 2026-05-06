@@ -95,6 +95,191 @@ Frontend Container ↔ Backend Container ↔ PostgreSQL Container
 
 ---
 
+# 🔄 Deployment Environment Switching Guide
+
+## 🎯 Why Environment Switching Is Needed
+
+This project supports TWO deployment architectures:
+
+| Environment | Purpose |
+|---|---|
+| Kubernetes | Production-style orchestration |
+| Docker Compose | Local multi-container orchestration |
+
+The frontend requires different backend API URLs depending on deployment mode.
+
+---
+
+# ☸️ Kubernetes Deployment Mode
+
+## Frontend API URL
+
+```env
+VITE_API_URL=https://sports.local/api
+```
+
+---
+
+## ▶️ Step 1 — Switch Frontend Environment
+
+```bash
+cp react_frontend/.env.kubernetes react_frontend/.env
+```
+
+---
+
+## ▶️ Step 2 — Use Minikube Docker Environment
+
+```bash
+eval $(minikube docker-env)
+```
+
+---
+
+## ▶️ Step 3 — Rebuild Frontend Image
+
+```bash
+docker build -t sports-frontend:latest ./react_frontend
+```
+
+---
+
+## ▶️ Step 4 — Rebuild Backend Image
+
+```bash
+docker build -t sports-backend:latest ./django_backend
+```
+
+---
+
+## ▶️ Step 5 — Restart Kubernetes Deployments
+
+```bash
+kubectl rollout restart deployment sports-frontend
+```
+
+```bash
+kubectl rollout restart deployment sports-backend
+```
+
+---
+
+## ▶️ Step 6 — Verify Pods
+
+```bash
+kubectl get pods
+```
+
+Wait until all pods become:
+
+```text
+Running
+```
+
+---
+
+## ▶️ Step 7 — Open Kubernetes Application
+
+```text
+https://sports.local
+```
+
+---
+
+# 🐳 Docker Compose Deployment Mode
+
+## Frontend API URL
+
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+---
+
+## ▶️ Step 1 — Switch Frontend Environment
+
+```bash
+cp react_frontend/.env.compose react_frontend/.env
+```
+
+---
+
+## ▶️ Step 2 — Build Compose Containers
+
+```bash
+docker compose build --no-cache
+```
+
+---
+
+## ▶️ Step 3 — Start Compose Stack
+
+```bash
+docker compose up -d
+```
+
+---
+
+## ▶️ Step 4 — Verify Running Containers
+
+```bash
+docker compose ps
+```
+
+---
+
+## ▶️ Step 5 — Open Compose Application
+
+```text
+http://localhost:3000
+```
+
+---
+
+# 🧠 Important Note About Frontend Builds
+
+This project uses:
+
+- React
+- Vite
+- Docker
+
+Vite injects environment variables during image build time.
+
+Therefore:
+
+```text
+Changing .env requires rebuilding frontend images.
+```
+
+---
+
+# 🎯 Deployment Strategy Summary
+
+| Feature | Kubernetes | Docker Compose |
+|---|---|---|
+| HTTPS | ✅ | ❌ |
+| Ingress | ✅ | ❌ |
+| HPA Autoscaling | ✅ | ❌ |
+| Self-Healing | ✅ | ❌ |
+| Jenkins CI/CD | ✅ | ❌ |
+| Prometheus/Grafana | ✅ | ❌ |
+| Multi-container orchestration | ✅ | ✅ |
+| Persistent PostgreSQL | ✅ | ✅ |
+| Frontend + Backend + DB integration | ✅ | ✅ |
+
+---
+
+# 🧠 Key Learning Outcome
+
+This project demonstrates how the same application can support:
+
+- Kubernetes orchestration
+- Docker Compose orchestration
+- Multi-environment deployment strategies
+- Environment-aware frontend configuration
+- Production-style DevOps workflows
+
 # ☸️ STEP 1 — Show Kubernetes Running System
 
 ## ▶️ Show Pods
