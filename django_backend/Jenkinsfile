@@ -9,7 +9,6 @@ pipeline {
         BACKEND_REPO = "yashjadhav23/sports-backend"
         FRONTEND_REPO = "yashjadhav23/sports-frontend"
         IMAGE_TAG = "${BUILD_NUMBER}"
-        KUBECONFIG_FILE = "${WORKSPACE}/django_backend/kubeconfig.yaml"
     }
 
     stages {
@@ -72,35 +71,6 @@ pipeline {
                     docker push $FRONTEND_REPO:latest
                     '''
                 }
-            }
-        }
-
-        // ---------------- DEPLOY ----------------
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh '''
-                set -e
-
-                if [ ! -f "$KUBECONFIG_FILE" ]; then
-                    echo "Missing kubeconfig at $KUBECONFIG_FILE"
-                    exit 1
-                fi
-
-                export KUBECONFIG="$KUBECONFIG_FILE"
-
-                kubectl config current-context
-                kubectl get nodes
-
-                # Apply manifests
-                kubectl apply -f django_backend/k8s-backend.yaml
-                kubectl apply -f django_backend/k8s-service.yaml
-                kubectl apply -f django_backend/k8s-frontend.yaml
-                kubectl apply -f django_backend/k8s-ingress.yaml
-
-                # Wait for rollout
-                kubectl rollout status deployment/sports-backend --timeout=180s
-                kubectl rollout status deployment/sports-frontend --timeout=180s
-                '''
             }
         }
     }
