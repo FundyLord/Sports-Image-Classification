@@ -464,11 +464,17 @@ kubectl get pods -w
 
 # 🤖 STEP 8 — Jenkins CI/CD Pipeline
 
+
+## ▶️ Jenkins Pipepine architecture
+![Output](image.png)
+---
+
 ## ▶️ Open Jenkins
 
 ```text
 http://localhost:8080
 ```
+
 
 ---
 
@@ -525,24 +531,6 @@ git push
 🎯 Say:
 
 > “Jenkins automates testing, image creation, registry push, and Kubernetes deployment.”
-
----
-
-## ▶️ Optional Advanced Demo — Pipeline Failure
-
-Break test intentionally:
-
-```python
-self.assertEqual(response.status_code, 500)
-```
-
-Push code and show:
-
-❌ Pipeline failure
-
-🎯 Say:
-
-> “If tests fail, deployment is blocked automatically ensuring production stability.”
 
 ---
 
